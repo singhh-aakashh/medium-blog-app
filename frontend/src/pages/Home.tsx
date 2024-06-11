@@ -5,7 +5,7 @@ export const Home =() =>{
     return(
         <>
         {/* <HomeAppbar/> */}
-        <div className="hero min-h-screen" style={{backgroundImage: 'url(../../public/bgimg.avif)'}}>
+        <div className="hero min-h-screen" style={{backgroundImage: 'url(/bgimg.avif)'}}>
   <div className="hero-overlay bg-opacity-60"></div>
   <div className="hero-content text-center text-neutral-content">
     <div className="max-w-md">

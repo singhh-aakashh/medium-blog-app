@@ -108,5 +108,47 @@ blogRouter.get("/bulk",async (c)=>{
     }
 
 })
+blogRouter.get("/user/blogs",async (c)=>{
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+    try {
+        const posts =await prisma.user.findUnique({
+            select:{
+                posts:true
+            },
+            where:{
+                id:c.get("userId")
+            }
+        })
+        return c.json({posts})
+    } catch (error) {
+        console.log(error)
+    }
+})
+blogRouter.delete("/delete/:id",async (c)=>{
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+    const id = c.req.param("id")
+    // console.log("id",id)
+    if(!id){
+        return c.json({"msg":"enter id"})
+    }
+
+    try {
+        const res = await prisma.post.delete({
+        where:{
+            id
+        }
+        })
+        return c.json({
+            "msg":"deleted",
+            res
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 export default blogRouter

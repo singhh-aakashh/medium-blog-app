@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../config";
 
 export const useBlogs = () => {
-  const[blogs,setBlogs]=useState([]);
+  const[blogs,setBlogs]=useState<any[]>([]);
   const[loading,setLoading]=useState(true);
 
   useEffect(()=>{

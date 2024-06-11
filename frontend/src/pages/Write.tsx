@@ -53,7 +53,7 @@ export const Write = () => {
   return (
     <>
     <Appbar />
-    <div className= " relative w-full md:w-2/3  mx-auto">
+    <div className= " relative w-full md:w-2/3  mt-6 mx-auto">
         <div className="text-3xl font-medium text-center">Write your blogs here.</div>
     <div className="my-4">
     <textarea id="message" rows={4} className="block text-2xl p-2.5 w-full  bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "

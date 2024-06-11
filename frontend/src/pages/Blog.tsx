@@ -1,19 +1,43 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useBlog } from "../hooks/useBlog"
 import { Avatar } from "../components/BlogCard";
 import { Appbar } from "../components/Appbar";
 import { Skeleton } from "../components/Skeleton";
+import axios from "axios";
+import { DEV_URL } from "../config";
+
+interface blogType {
+  title:string,
+  content:string
+}
 
 const Blog = () => {
-    const {id} = useParams()
-    console.log(id)
+  const navigate=useNavigate()
+
+  const {id} = useParams()
+    // console.log(id)
     if(!id){
       return <div>
         404 not found
       </div>
     }
-    const {loading , blog} = useBlog(id);
-    console.log(blog)
+    const deleteBlog =async()=>{
+      try {
+     await axios.delete(`${DEV_URL}/api/v1/blog/delete/${id}`,{
+      headers:{
+        Authorization:localStorage.getItem("token")
+      }
+     })
+        navigate("/user/blogs")
+      } catch (error) {
+       console.log(error) 
+      }
+
+    }
+
+    
+    const {loading , blog}:{loading:boolean,blog:blogType} = useBlog(id);
+    // console.log(blog)
     if(loading){
         return <div>
           <Appbar/>
@@ -35,8 +59,12 @@ const Blog = () => {
           {blog.title}
         </h5>
         <p className="mb-3 font-normal text-gray-500 ">{blog.content} </p>
-        <div className="mt-3">
+        <div className="mt-3 flex justify-between">
           <p>{`${blog.content.length / 100} mins read`}</p>
+          <div className="flex gap-2 ">
+          <button className="btn btn-active">Edit</button>
+          <button className="btn btn-active" onClick={deleteBlog}>Delete</button>
+          </div>
         </div>
       </div>
     </div>

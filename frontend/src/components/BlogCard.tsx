@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 interface BlogCardProps {
   title: string;
   content: string;
-  authorName: string;
+  authorName?: string;
   publishedDate: string;
-  id:string
+  id:string;
+  withoutavatar?:boolean
+
 }
 
 export const BlogCard = ({
@@ -13,15 +15,17 @@ export const BlogCard = ({
   content,
   publishedDate,
   authorName,
+  withoutavatar,
   id
 }: BlogCardProps) => {
+  
   return (
     
     <Link to={`/blog/${id}`}>
     <div className="flex w-full justify-center md:mx-auto md:justify-center">
       <div className="w-full md:w-2/3 p-6  bg-white border-b border-gray-300">
         <div className="flex mb-2 gap-4 font-medium items-center">
-          <Avatar authorName={authorName} />
+          {withoutavatar?"":<Avatar authorName={authorName} />}
           <p>{authorName}</p>
           <p className="text-gray-400">{publishedDate}</p>
         </div>
@@ -38,7 +42,7 @@ export const BlogCard = ({
     
   );
 };
-export const Avatar = ({ authorName }: { authorName: string }) => {
+export const Avatar = ({ authorName }: { authorName: string | undefined}) => {
   if(!authorName){
     authorName="Anonymous"
   }
